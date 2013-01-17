@@ -26,17 +26,22 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.atmosphere</groupId>
 			<artifactId>atmosphere-jersey</artifactId>
 			<version>1.0.7</version>
 		</dependency>
-		<!--  <dependency>
-			<groupId>org.atmosphere</groupId>
-			<artifactId>atmosphere-jquery</artifactId>
-			<version>1.0.7</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.atmosphere</groupId> <artifactId>atmosphere-jquery</artifactId> 
+			<version>1.0.7</version> </dependency> -->
 		<dependency>
 			<groupId>org.atmosphere</groupId>
 			<artifactId>atmosphere-runtime</artifactId>
@@ -53,10 +58,22 @@
 			<version>1.0</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.sun.faces</groupId> <artifactId>jsf-api</artifactId> 
-			<version>2.1.2</version> <scope>compile</scope> </dependency> <dependency> 
-			<groupId>com.sun.faces</groupId> <artifactId>jsf-impl</artifactId> <version>2.1.2</version> 
-			<scope>compile</scope> </dependency> <dependency> <groupId>org.primefaces</groupId> 
-			<artifactId>primefaces</artifactId> <version>3.4.2</version> </dependency> -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>3.4.2</version>
+		</dependency>
 	</dependencies>
 </project>

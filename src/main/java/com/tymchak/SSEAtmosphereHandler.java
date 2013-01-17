@@ -6,6 +6,7 @@ import org.atmosphere.cpr.AtmosphereRequest;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEvent;
 import org.atmosphere.cpr.AtmosphereResponse;
+import org.atmosphere.cpr.Broadcaster;
 import org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor;
 
 import java.io.IOException;
@@ -17,6 +18,13 @@ public class SSEAtmosphereHandler implements AtmosphereHandler {
 	 @Override
 	    public void onRequest(AtmosphereResource r) throws IOException {
 
+		 AtmosphereResponse res = r.getResponse();
+
+	        System.out.println("on req r = " + r.toString());
+	        System.out.println("on req res = " + res.toString());
+		 
+	        Broadcaster b = r.getBroadcaster();
+	        
 	        AtmosphereRequest req = r.getRequest();
 	        if (req.getMethod().equalsIgnoreCase("POST")) {
 	            r.getBroadcaster().broadcast(req.getReader().readLine().trim());
@@ -28,6 +36,10 @@ public class SSEAtmosphereHandler implements AtmosphereHandler {
 	        AtmosphereResource r = event.getResource();
 	        AtmosphereResponse res = r.getResponse();
 
+	        System.out.println("on st change r = " + r.toString());
+	        System.out.println("on st change res = " + res.toString());
+	        
+	        
 	        if (event.isSuspended()) {
 	            String body = event.getMessage().toString();
 
