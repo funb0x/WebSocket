@@ -12,65 +12,46 @@ import org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor;
 import java.io.IOException;
 import java.util.Date;
 
-@AtmosphereHandlerService(path = "/chat", interceptors= {AtmosphereResourceLifecycleInterceptor.class})
+@AtmosphereHandlerService(path = "/chat", interceptors = { AtmosphereResourceLifecycleInterceptor.class })
 public class SSEAtmosphereHandler implements AtmosphereHandler {
 
-	 @Override
-	    public void onRequest(AtmosphereResource r) throws IOException {
+	@Override
+	public void onRequest(AtmosphereResource r) throws IOException {
 
-		 AtmosphereResponse res = r.getResponse();
+		System.out.println("someone connected");
 
-	        System.out.println("on req r = " + r.toString());
-	        System.out.println("on req res = " + res.toString());
-		 
-	        Broadcaster b = r.getBroadcaster();
-	        
-	        AtmosphereRequest req = r.getRequest();
-	        if (req.getMethod().equalsIgnoreCase("POST")) {
-	            r.getBroadcaster().broadcast(req.getReader().readLine().trim());
-	        }
-	    }
+		// AtmosphereResponse res = r.getResponse();
+		//
+		// System.out.println("on req r = " + r.toString());
+		// System.out.println("on req res = " + res.toString());
+		//
+		// Broadcaster b = r.getBroadcaster();
+		//
+		// AtmosphereRequest req = r.getRequest();
+		// if (req.getMethod().equalsIgnoreCase("POST")) {
+		// r.getBroadcaster().broadcast(req.getReader().readLine().trim());
+		// }
+	}
 
-	    @Override
-	    public void onStateChange(AtmosphereResourceEvent event) throws IOException {
-	        AtmosphereResource r = event.getResource();
-	        AtmosphereResponse res = r.getResponse();
+	@Override
+	public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+		AtmosphereResource r = event.getResource();
+		AtmosphereResponse res = r.getResponse();
 
-	        System.out.println("on st change r = " + r.toString());
-	        System.out.println("on st change res = " + res.toString());
-	        
-	        
-	        if (event.isSuspended()) {
-	            String body = event.getMessage().toString();
+		if (event.isSuspended()) {
+			String body = event.getMessage().toString();
+			System.out.println("body = " + body);
+			System.out.println("{ \"a\" : \"aaaa\", \"b\" : \"bbb\", \"c\" : \"ccc\" }");
+			// Simple JSON -- Use Jackson for more complex structure
+			// Message looks like { "a" : "aaaa", "b" : "bbb", "c" : "ccc" }
+			
+			res.getWriter().write("{ \"a\" : \"aaaa\", \"b\" : \"bbb\", \"c\" : \"ccc\" }");
+		}
+	}
 
-	            // Simple JSON -- Use Jackson for more complex structure
-	            // Message looks like { "author" : "foo", "message" : "bar" }
-	            String author = body.substring(body.indexOf(":") + 2, body.indexOf(",") - 1);
-	            String message = body.substring(body.lastIndexOf(":") + 2, body.length() - 2);
-
-	            res.getWriter().write(new Data(author, message).toString());
-	        } else if (!event.isResuming()){
-	            event.broadcaster().broadcast(new Data("Someone", "say bye bye!").toString());
-	        }
-	    }
-
-	    @Override
-	    public void destroy() {
-	    }
-
-	    private final static class Data {
-
-	        private final String text;
-	        private final String author;
-
-	        public Data(String author, String text) {
-	            this.author = author;
-	            this.text = text;
-	        }
-
-	        public String toString() {
-	            return "{ \"text\" : \"" + text + "\", \"author\" : \"" + author + "\" , \"time\" : " + new Date().getTime() + "}";
-	        }
-	    }
+	@Override
+	public void destroy() {
+		System.out.println("sedtroyed!!!!!!!!!!!!!!!!!");
+	}
 
 }
