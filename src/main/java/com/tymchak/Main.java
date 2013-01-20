@@ -14,9 +14,10 @@ public class Main {
 		this.m = m;
 	}
 
-	public void sendMessage(){
+	public String sendMessage(){
 		System.out.println("message send");
 		BroadcasterFactory.getDefault().lookup("/chat", true).broadcast("hello world");
+		return null;
 	}
 	
 }
